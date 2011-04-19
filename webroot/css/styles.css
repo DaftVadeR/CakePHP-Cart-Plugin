@@ -1,0 +1,101 @@
+html {height: 100%}
+a {color: blue;}
+h1, h2, h3, h4, h5 {margin-top: 0; font-weight: bold;}
+h1, h2, h3, h4, h5, p, .button, .input, .block, ul {margin-bottom: 15px;}
+h1 {font-size: 24px;}
+h2 {font-size: 22px;}
+h3 {font-size: 18px;}
+h4 {font-size: 16px;}
+h5 {font-size: 14px;}
+ul li {list-style-type: disc; margin-left: 15px;}
+
+#content {padding: 15px;}
+#right_col {padding: 15px 0;}
+#container {width: 980px; margin: 0 auto; padding: 15px; background: #DDD;}
+#header, #footer {background: #CCC; padding: 15px;}
+#right_col .block {padding: 10px; background: #CCC;}
+
+.success_flash, .error_flash, .notice_flash {border-style: solid; border-width: 1px; padding: 15px; margin-bottom: 15px;}
+.error_flash {border-color: red; color: red; background: #ffd9d9;}
+.success_flash {border-color: green; color: green; background: #f5fef3;}
+.notice_flash {border-color: #f59121; color: #f59121; background: #feecda;}
+
+.message {font-weight: bold; font-style: italic; margin-bottom: 15px;}
+
+.product {margin-bottom: 15px; border: 1px solid #999; background: #CCC; padding: 10px;}
+.product .button {float:right;}
+.prod_desc {margin-bottom: 15px;}
+.altrow {background: #CCC;}
+.prod_main {padding: 0 15px;}
+.actions {text-align: right;}
+.price {font-weight: bold; text-align: center;}
+.button {cursor: pointer; float:left; margin-right: 15px; display: block; background: #333; border: 2px solid #777; color: #CCC; text-align: center; padding: 5px 0; font-weight: bold; text-decoration: none; border-radius: 5px; width: 90px;}
+.button.large {width: 140px;}
+.note {font-style: italic;}
+
+.billing_address {background: #CCC; padding: 15px;}
+
+.btop {margin-top: 15px; border-top: 1px solid #000; padding-top: 15px;}
+
+.record-list { width: 100%;table-layout: fixed;margin-bottom: 15px;}
+.record-list th { padding: 10px; background: #cccccc;}
+.record-list th, .record-list th a { color: #333333; font-weight: bold;}
+.record-list td { padding: 10px; border-bottom: 1px solid #CCCCCC;}
+.record-list > tbody > tr.altrow > td { background: #E9E9E9;}
+.record-list .minimize { table-layout: fixed; width: 100%;}
+.record-list td.min-cont, .record-list > tbody > tr.altrow > td.min-cont { border: none; padding: 0; background: #AAAAAA; display:none;}
+.record-list td.min-cont a { color: #333; }
+.record-list td.min-cont td.min-cont { background: #333; color: #AAA;}
+.record-list td.min-cont td.min-cont td.min-cont { background: #000; color: #AAA;}
+.record-list td.min-cont td.min-cont td.min-cont td.min-cont { background: #333; color: #AAA;}
+.record-list td.min-cont td.min-cont td.min-cont td.min-cont td.min-cont { background: #AAA; color: #000;}
+.record-list td.min-cont td.min-cont td.min-cont td.min-cont td.min-cont a { color: #333;}
+.record-list td.min-cont td.min-cont a { color: #FFFFFF;}
+
+/* Cart */
+
+.cart_action {text-align: right;}
+#cart .row, #full_cart .row {padding: 5px;}
+#cart .total, #full_cart .total {border-top: 1px solid #000; padding-top: 5px; margin-top: 5px; font-weight: bold; font-size: 15px; text-align: right;}
+
+.right {text-align: right;}
+.fright {float:right;}
+.button.fright {margin-right: 0;}
+
+.form {margin-bottom: 15px;}
+.input.text label, .input.textarea label, .input.password label, .input.select label {display: block; font-weight: bold;}
+.input.text label:after, .input.textarea label:after, .input.password label:after, .input.select label:after {content: ': ';}
+.input {padding: 5px; background: #EEE;}
+.input .error-message {color: red;}
+.submit input {padding: 5px 10px; background: #666; color: #FFF; font-weight: bold; border: 1px solid #FFF; float:right;}
+.submit {clear:both; overflow: hidden;}
+
+.tabs li.tab {display: none;}
+.tabs li.tab.current {display: block;}
+.tabs .tab_links {border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 15px;}
+.tabs .tab_links li {float:left; list-style-type: none; margin-left: 5px;}
+.tabs .tab_links a {color: #FFF; background: #666; padding: 5px 10px;}
+.tabs .tab_links a.current {color: #000; background: #fff;}
+
+dl {border: 1px solid #999; margin: 0; padding: 15px; margin-bottom: 15px;}
+dl dt {float:left; width: 30%; clear:left; margin: 0; padding: 2px; font-weight: bold;}
+dl dt:after {content: ': ';}
+dl dd {float:left; width: 68%; margin: 0; padding: 2px;}
+
+/*****************/
+/* Random styles */
+/*****************/
+
+.clearfix:after {
+  content: "\0020";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+  overflow:hidden;  
+}
+.clearfix {
+    display: block;
+    *display:inline-block;
+    *zoom: 1;
+}
