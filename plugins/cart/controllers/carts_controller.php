@@ -18,7 +18,7 @@ class CartsController extends CartAppController {
 		
 		if(isset($this->params['requested']) && $this->params['requested'])
 		{
-			$this->autoRender = false;			
+			$this->autoRender = false;
 			return $cart;
 		}	
 		
