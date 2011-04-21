@@ -19,6 +19,7 @@
  */
 set_time_limit(0);
 ini_set('display_errors', 1);
+define('CAKE_UNIT_TEST', 1);
 /**
  * Use the DS to separate the directories in other defines
  */
@@ -50,7 +51,7 @@ ini_set('display_errors', 1);
  *
  */
 	if (!defined('CAKE_CORE_INCLUDE_PATH')) {
-		define('CAKE_CORE_INCLUDE_PATH', 'I:' . DS . 'Development' . DS . 'wamp' . DS . 'www' . DS . 'cake');
+		define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'cake');
 	}
 
 /**

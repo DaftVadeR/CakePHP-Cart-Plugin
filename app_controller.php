@@ -32,5 +32,27 @@
  */
 class AppController extends Controller {
 	var $components = array('Security', 'Session', 'Auth'=>array('logoutRedirect'=>'/', 'fields'=>array('username'=>'email', 'password'=>'password')), 'RequestHandler');
-	var $helpers = array('Form', 'Html', 'Session');    
+	var $helpers = array('Form', 'Html', 'Session');
+    
+    function redirect($url = null, $status = null, $exit = true) {
+		if (defined('CAKE_UNIT_TEST') && CAKE_UNIT_TEST) {
+			$old = error_reporting(E_USER_NOTICE);
+			trigger_error('redirect:'.Router::url($url, true), E_USER_NOTICE);
+			error_reporting($old);
+		} else {
+			parent::redirect($url, $status, $exit);
+		}
+	}
+    
+    function cakeError($method, $messages = array()) {
+		if (defined('CAKE_UNIT_TEST') && CAKE_UNIT_TEST) {
+			$old = error_reporting(E_USER_NOTICE);
+			trigger_error($method, E_USER_NOTICE);
+			error_reporting($old);
+			$this->autoRender = false;
+			$this->render(false, 'error');
+		} else {
+			parent::cakeError($method, $messages);
+		}
+	}
 }

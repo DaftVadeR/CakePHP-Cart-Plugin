@@ -1,16 +1,68 @@
 <?php
 class CartItemsController extends CartAppController {
 
-	var $name = 'CartItems';
-    //var $components = array('Session');
+	var $name = 'CartItems';    
 	
 	function beforeFilter()
 	{                
 		parent::beforeFilter();
 		$this->Auth->allow('add', 'delete');
-	}
+	}	
+
+	function add($id) {       
+		$id = intval($id);        
+		
+		if(!$this->CartItem->itemExists($id))
+		{
+			$this->Session->setFlash('Invalid product specified to add to cart.', 'error');
+			$this->redirect($this->referer());
+		}
+		
+		$user = ($this->Auth->user('id')?array('user_id'=>$this->Auth->user('id')):array('session_id'=>$this->Session->id()));        
+        $cart = $this->CartItem->Cart->getCart(isset($user['user_id'])?$user['user_id']:null, isset($user['session_id'])?$user['session_id']:null, false);       
+        
+		if(!empty($cart) && $this->CartItem->itemInCart($id, $cart['Cart']['id']))
+		{            
+			$this->Session->setFlash('That product already exists in your cart.', 'error');			
+		}
+        elseif($this->CartItem->addItem($id, (empty($cart)?0:$cart['Cart']['id'])))
+        {
+            $this->Session->setFlash('Item added to cart successfully.', 'success');            
+        }
+        else
+        {
+            $this->Session->setFlash('Item could not be added to cart.', 'error');            
+        }
+        
+        $this->redirect($this->referer());
+	}   
 	
-	/*function index() {
+
+	function delete($id = null) {
+		$id = intval($id);
+		
+		$cart = $this->CartItem->Cart->getCart($this->Auth->user('id'), $this->Session->id());
+		
+		if(empty($cart))
+		{
+			$this->Session->setFlash('You have nothing in your cart yet!', 'error');			
+		}	
+		elseif (!$this->CartItem->itemInCart($id, $cart['Cart']['id'])) {
+			$this->Session->setFlash('That product is not in your cart.', 'error');			
+		}		
+		elseif ($this->CartItem->deleteAll(array('item_id'=>$id, 'cart_id'=>$cart['Cart']['id'])))
+        {
+			$this->Session->setFlash('Item removed from cart.', 'success');						
+		}
+		else
+        {
+            $this->Session->setFlash('Cart item was not deleted.', 'error');
+        }
+        
+		$this->redirect($this->referer());
+	}
+    
+    /*function index() {
 		$this->CartItem->recursive = 0;
 		$this->set('cartItems', $this->paginate());
 	}
@@ -22,50 +74,6 @@ class CartItemsController extends CartAppController {
 		}
 		$this->set('cartItem', $this->CartItem->read(null, $id));
 	}*/
-
-	function add($id) {       
-		$id = intval($id);
-        
-		$item = $this->CartItem->Item->find('count', array('limit'=>1, 'conditions'=>array('id'=>$id)));
-		
-		if($item==0)
-		{
-			$this->Session->setFlash('Invalid product specified to add to cart', 'error');
-			$this->redirect($this->referer());
-		}
-		
-		$user = ($this->Auth->user('id')?array('user_id'=>$this->Auth->user('id')):array('session_id'=>$this->Session->id()));
-	
-		$cart = $this->CartItem->Cart->getCart($this->Auth->user('id'), $this->Session->id(), false);				
-        
-		if($this->CartItem->find('count', array('conditions'=>array('CartItem.item_id'=>$id)+$user))>0)
-		{
-			$this->Session->setFlash('That product already exists in your cart.', 'error');
-			$this->redirect($this->referer());
-		}
-		
-		if(empty($cart))
-		{            
-			$this->CartItem->Cart->create($user);		
-			if($this->CartItem->Cart->save())
-            {
-                $this->CartItem->Cart->recursive = -1;
-                $cart = $this->CartItem->Cart->read();
-            }
-		}
-		
-		if(!empty($cart))
-		{            
-			$this->CartItem->create(array('item_id'=>$id, 'cart_id'=>$cart['Cart']['id']));
-		
-			if($this->CartItem->save())
-			{                
-				$this->Session->setFlash('Item added to cart successfully', 'success');
-			}         
-		}
-		
-		$this->redirect($this->referer());
-	}
 
 	/*function edit($id = null) {
 		if (!$id && empty($this->data)) {
@@ -87,32 +95,5 @@ class CartItemsController extends CartAppController {
 		$products = $this->CartItem->Product->find('list');
 		$this->set(compact('carts', 'products'));
 	}*/
-
-	function delete($id = null) {
-		$id = intval($id);
-		
-		$cart = $this->CartItem->Cart->getCart($this->Auth->user('id'), $this->Session->id());
-		
-		if(empty($cart))
-		{
-			$this->Session->setFlash('You have nothing in your cart yet!', 'error');
-			$this->redirect($this->referer());
-		}
-		
-		$exist = $this->CartItem->find('count', array('limit'=>1, 'conditions'=>array('item_id'=>$id)));
-		
-		if ($exist==0) {
-			$this->Session->setFlash('That product is not in your cart.', 'error');
-			$this->redirect($this->referer());
-		}
-		
-		if ($this->CartItem->deleteAll(array('item_id'=>$id, 'cart_id'=>$cart['Cart']['id']))) {
-			$this->Session->setFlash('Item removed from cart.', 'success');
-			$this->redirect($this->referer());			
-		}
-		
-		$this->Session->setFlash('Cart item was not deleted', 'error');
-		$this->redirect($this->referer());
-	}
 }
 ?>

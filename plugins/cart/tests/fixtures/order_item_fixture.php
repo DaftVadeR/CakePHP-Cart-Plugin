@@ -2,6 +2,7 @@
 /* Product Fixture generated on: 2011-04-09 09:55:27 : 1302342927 */
 class OrderItemFixture extends CakeTestFixture {
 	var $name = 'OrderItem';
+    var $table = 'cart_order_items';
 
 	var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 20, 'key' => 'primary'),

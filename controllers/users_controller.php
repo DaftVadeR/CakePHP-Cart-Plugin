@@ -15,34 +15,7 @@ class UsersController extends AppController {
 		$this->Auth->autoRedirect = false;
 		
 		$this->Auth->allow('add');
-	}
-	
-	private function _assignCartToUser()
-	{
-		$cart = $this->User->Cart->getCart(null, $this->Session->id());	
-		
-		if(!empty($cart))
-		{
-			if(count($cart['CartItem'])==0)
-			{
-				$this->User->Cart->delete($cart['Cart']['id']);
-			}
-			else
-			{
-				$existing = $this->User->Cart->getCart($this->Auth->user('id'), null);
-				
-				if(!empty($existing))
-				{
-					$this->User->Cart->delete($existing['Cart']['id']);
-				}
-				
-				$this->User->Cart->id = $cart['Cart']['id'];
-				$this->User->Cart->updateAll(array('user_id'=>$this->Auth->user('id'), 'session_id'=>null), array('Cart.id'=>$cart['Cart']['id']));
-			}
-		}
-		
-		return true;
-	}
+	}	
 	
 	function login()
 	{
@@ -50,7 +23,7 @@ class UsersController extends AppController {
 		{
 			if($this->Auth->user())
 			{				
-				$this->_assignCartToUser();				
+				$this->User->assignCartToUser($this->Auth->user('id'), $this->Session->id());				
 				$this->redirect('/');
 			}
 		}
@@ -61,21 +34,7 @@ class UsersController extends AppController {
 		$this->Session->setFlash('You have been logged out successfully.', 'success');
 		$to = $this->Auth->logout();		
 		$this->redirect($to);
-	}
-
-	function view()
-	{
-		$id = $this->Auth->user('id');
-		
-		if (!$id)
-		{
-			$this->redirect($this->Auth->logout());
-			$this->Session->setFlash('You are not logged in.', 'error');
-			$this->redirect(array('action' => 'login'));
-		}
-		
-		$this->set('user', $this->User->read(null, $id));
-	}
+	}	
 
 	function add() {
 		if (!empty($this->data))

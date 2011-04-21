@@ -5,12 +5,8 @@ class CartsController extends CartAppController {
 
 	function beforeFilter()
 	{
-		$this->Auth->allow('view', 'delete', 'checkout');
-	}
-
-	function index() {
-		$this->Cart->recursive = 0;
-		$this->set('carts', $this->paginate());
+		$this->Auth->allow('view', 'delete', 'checkout');        
+        parent::beforeFilter();
 	}
 
 	function view() {
@@ -24,7 +20,32 @@ class CartsController extends CartAppController {
 		
 		$this->set('cart', $cart);
 	}
-	
+    
+	function delete() {
+		$cart = $this->Cart->getCart($this->Auth->user('id'), $this->Session->id(), false);
+		
+		if(empty($cart))
+		{
+			$this->Session->setFlash('Your cart is already empty.', 'error');
+			$this->redirect($this->referer());
+		}
+		
+		if($this->Cart->delete($cart['Cart']['id']))		
+		{
+			$this->Session->setFlash('Cart cleared successfully.', 'success');
+			$this->redirect($this->referer());
+		}
+		
+		$this->Session->setFlash('Cart was not cleared', 'error');
+		$this->redirect($this->referer());
+	}
+    
+    
+	/*function index() {
+		$this->Cart->recursive = 0;
+		$this->set('carts', $this->paginate());
+	}*/
+    
 	/*function add() {
 		if (!empty($this->data)) {
 			$this->Cart->create();
@@ -59,23 +80,6 @@ class CartsController extends CartAppController {
 		$this->set(compact('users'));
 	}*/
 
-	function delete() {
-		$cart = $this->Cart->getCart($this->Auth->user('id'), $this->Session->id(), false);
-		
-		if(empty($cart))
-		{
-			$this->Session->setFlash('Your cart is already empty.', 'error');
-			$this->redirect($this->referer());
-		}
-		
-		if($this->Cart->delete($cart['Cart']['id']))		
-		{
-			$this->Session->setFlash('Cart cleared successfully.', 'success');
-			$this->redirect($this->referer());
-		}
-		
-		$this->Session->setFlash('Cart was not cleared', 'error');
-		$this->redirect($this->referer());
-	}
+	
 }
 ?>

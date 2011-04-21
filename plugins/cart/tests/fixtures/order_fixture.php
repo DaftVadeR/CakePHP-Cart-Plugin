@@ -2,7 +2,8 @@
 /* Cart Fixture generated on: 2011-04-09 09:55:08 : 1302342908 */
 class OrderFixture extends CakeTestFixture {
 	var $name = 'Order';
-
+    var $table = 'cart_orders';
+    
 	var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 20, 'key' => 'primary'),
 		'user_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),

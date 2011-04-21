@@ -2,6 +2,7 @@
 /* Country Fixture generated on: 2011-04-14 13:17:31 : 1302787051 */
 class CountryFixture extends CakeTestFixture {
 	var $name = 'Country';
+    var $table = 'cart_countries';
 
 	var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 5, 'key' => 'primary'),

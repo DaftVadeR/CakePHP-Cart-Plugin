@@ -98,6 +98,33 @@ class User extends AppModel {
 		parent::beforeValidate();
 		return true;
 	}
+    
+    function assignCartToUser($session_id, $user_id)
+	{
+		$cart = $this->Cart->getCart(null, $session_id);	
+		
+		if(!empty($cart))
+		{
+			if(count($cart['CartItem'])==0)
+			{
+				$this->Cart->delete($cart['Cart']['id']);
+			}
+			else
+			{
+				$existing = $this->Cart->getCart($user_id, null);
+				
+				if(!empty($existing))
+				{
+					$this->Cart->delete($existing['Cart']['id']);
+				}
+				
+				$this->Cart->id = $cart['Cart']['id'];
+				$this->Cart->updateAll(array('user_id'=>$user_id, 'session_id'=>null), array('Cart.id'=>$cart['Cart']['id']));
+			}
+		}
+		
+		return true;
+	}
 
 }
 ?>

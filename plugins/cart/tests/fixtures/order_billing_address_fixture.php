@@ -1,7 +1,8 @@
 <?php
 /* BillingAddress Fixture generated on: 2011-04-14 13:15:48 : 1302786948 */
-class BillingAddressFixture extends CakeTestFixture {
-	var $name = 'BillingAddress';
+class OrderBillingAddressFixture extends CakeTestFixture {
+	var $name = 'OrderBillingAddress';
+    var $table = 'cart_order_billing_addresses';
 
 	var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),

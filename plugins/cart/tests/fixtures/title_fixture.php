@@ -2,6 +2,7 @@
 /* Title Fixture generated on: 2011-04-14 13:17:24 : 1302787044 */
 class TitleFixture extends CakeTestFixture {
 	var $name = 'Title';
+    var $table = 'cart_titles';
 
 	var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 5, 'key' => 'primary'),
