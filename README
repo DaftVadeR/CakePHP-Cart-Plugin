@@ -1,1 +1,9 @@
-A CakePHP cart plugin made by a CakePHP newb.
+A CakePHP cart plugin made by a CakePHP newb. Allows for cart, user, and order management.
+
+Working:
+Cart usage, user registration, ordering, all work on a basic level for site users.
+
+Not working:
+Lots of tests missing.
+The admin section is still awol.
+And anything else that I haven't thought of.
